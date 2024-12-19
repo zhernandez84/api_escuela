@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Google.Protobuf;
+using MySql.Data.MySqlClient;
 using NetCoreAPIMySQL.Model;
 using System;
 using System.Collections.Generic;
@@ -97,20 +98,22 @@ namespace NetCoreAPIMySQL.Data.Repositories
                     {
                         if (dataReader.HasRows)
                         {
-                            response.alumno = new List<Alumno>();
+                            response.alumnoRespose = new List<AlumnoRespose>();
                             while (await dataReader.ReadAsync())
                             {
-                                Alumno getData = new Alumno();                                
+                                AlumnoRespose getData = new AlumnoRespose();                                
                                 getData.nIdAlumno = dataReader["nIdAlumno"] != DBNull.Value ? Convert.ToInt32(dataReader["nIdAlumno"]) : 0;
                                 getData.nEstatus = dataReader["nEstatus"] != DBNull.Value ? Convert.ToInt32(dataReader["nEstatus"]) : 0;
+                                getData.sEstatus = dataReader["sEstatus"] != DBNull.Value ? Convert.ToString(dataReader["sEstatus"]) : null;
                                 getData.sIdAlumno = dataReader["sIdAlumno"] != DBNull.Value ? Convert.ToString(dataReader["sIdAlumno"]) : null;
                                 getData.sNombre = dataReader["sNombre"] != DBNull.Value ? Convert.ToString(dataReader["sNombre"]) : null;
                                 getData.sPaterno = dataReader["sPaterno"] != DBNull.Value ? Convert.ToString(dataReader["sPaterno"]) : null;
                                 getData.sMaterno = dataReader["sMaterno"] != DBNull.Value ? Convert.ToString(dataReader["sMaterno"]) : null;
-                                getData.dFecNacimiento = dataReader["dFecNacimiento"] != DBNull.Value ? Convert.ToString(dataReader["dFecNacimiento"]) : null;
+                                //getData.dFecNacimiento = dataReader["dFecNacimiento"] != DBNull.Value ? Convert.ToString(dataReader["dFecNacimiento"]) : null;
+                                getData.dFecNacimiento = dataReader["dFecNacimiento"] != DBNull.Value ? Convert.ToDateTime(dataReader["dFecNacimiento"]) : DateTime.MinValue;
                                 getData.sGenero = dataReader["sGenero"] != DBNull.Value ? Convert.ToString(dataReader["sGenero"]) : null;
 
-                                response.alumno.Add(getData);
+                                response.alumnoRespose.Add(getData);
                             }
                             response.sMensaje = "Datos encontrados";
                             response.nCodigo = 1;
@@ -160,20 +163,23 @@ namespace NetCoreAPIMySQL.Data.Repositories
                     {
                         if (dataReader.HasRows)
                         {
-                            response.alumno = new List<Alumno>();
+                             
+                            response.alumnoRespose = new List<AlumnoRespose>();
                             while (await dataReader.ReadAsync())
                             {
-                                Alumno getData = new Alumno();
+                                AlumnoRespose getData = new AlumnoRespose();
                                 getData.nIdAlumno = dataReader["nIdAlumno"] != DBNull.Value ? Convert.ToInt32(dataReader["nIdAlumno"]) : 0;
                                 getData.nEstatus = dataReader["nEstatus"] != DBNull.Value ? Convert.ToInt32(dataReader["nEstatus"]) : 0;
+                                getData.sEstatus = dataReader["sEstatus"] != DBNull.Value ? Convert.ToString(dataReader["sEstatus"]) : null;
                                 getData.sIdAlumno = dataReader["sIdAlumno"] != DBNull.Value ? Convert.ToString(dataReader["sIdAlumno"]) : null;
                                 getData.sNombre = dataReader["sNombre"] != DBNull.Value ? Convert.ToString(dataReader["sNombre"]) : null;
                                 getData.sPaterno = dataReader["sPaterno"] != DBNull.Value ? Convert.ToString(dataReader["sPaterno"]) : null;
                                 getData.sMaterno = dataReader["sMaterno"] != DBNull.Value ? Convert.ToString(dataReader["sMaterno"]) : null;
-                                getData.dFecNacimiento = dataReader["dFecNacimiento"] != DBNull.Value ? Convert.ToString(dataReader["dFecNacimiento"]) : null;
+                               // date = dataReader["dFecNacimiento"] != DBNull.Value ? Convert.ToString(dataReader["dFecNacimiento"]) : null;
+                                getData.dFecNacimiento = dataReader["dFecNacimiento"] != DBNull.Value ? Convert.ToDateTime(dataReader["dFecNacimiento"]): DateTime.MinValue;
                                 getData.sGenero = dataReader["sGenero"] != DBNull.Value ? Convert.ToString(dataReader["sGenero"]) : null;
-
-                                response.alumno.Add(getData);
+                                
+                                response.alumnoRespose.Add(getData);
                             }
                             response.sMensaje = "Datos encontrados";
                             response.nCodigo = 1;

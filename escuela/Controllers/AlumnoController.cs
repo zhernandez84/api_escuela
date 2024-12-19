@@ -41,7 +41,7 @@ namespace API2.Controllers
                 response = await _alumnoRepository.GetAllAlumno();
                 if (response.nCodigo == 0)
                 {
-                    return BadRequest(new { nCodigo = response.nCodigo, sMensaje = response.sMensaje, Data = response.alumno });
+                    return BadRequest(new { nCodigo = response.nCodigo, sMensaje = response.sMensaje, Data = response.alumnoRespose });
                 }
 
             }
@@ -52,7 +52,7 @@ namespace API2.Controllers
                 return BadRequest(new { nCodigo = response.nCodigo, sMensaje = response.sMensaje, Data = ex.Message });
             }
 
-            return Ok(new { nCodigo = response.nCodigo, sMensaje = response.sMensaje, Data = response.alumno });
+            return Ok(new { nCodigo = response.nCodigo, sMensaje = response.sMensaje, Data = response.alumnoRespose });
         }
 
         [HttpGet("{busca}")]
@@ -67,7 +67,7 @@ namespace API2.Controllers
                 response = await _alumnoRepository.GetAlumno(busca);
                 if (response.nCodigo == 0)
                 {
-                    return BadRequest(new { nCodigo = response.nCodigo, sMensaje = response.sMensaje, Data = response.alumno });
+                    return BadRequest(new { nCodigo = response.nCodigo, sMensaje = response.sMensaje, Data = response.alumnoRespose });
                 }
 
             }
@@ -78,7 +78,7 @@ namespace API2.Controllers
                 return BadRequest(new { nCodigo = response.nCodigo, sMensaje = response.sMensaje, Data = ex.Message });
             }
 
-            return Ok(new { nCodigo = response.nCodigo, sMensaje = response.sMensaje, Data = response.alumno });
+            return Ok(new { nCodigo = response.nCodigo, sMensaje = response.sMensaje, Data = response.alumnoRespose });
         }
 
         [HttpPost]

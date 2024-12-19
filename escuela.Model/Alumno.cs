@@ -19,6 +19,20 @@ namespace NetCoreAPIMySQL.Model
 
     }
 
+    public class AlumnoRespose
+    {
+        public int nIdAlumno { get; set; }
+        public int nEstatus { get; set; }
+        public string sEstatus { get; set; }
+        public string sIdAlumno { get; set; }
+        public string sNombre { get; set; }
+        public string sPaterno { get; set; }
+        public string sMaterno { get; set; }
+        public DateTime dFecNacimiento { get; set; }
+        public string sGenero { get; set; }
+
+    }
+
     public class RegisterAlumnoResponse
     {
         public int nCodigo { get; set; }
@@ -29,6 +43,6 @@ namespace NetCoreAPIMySQL.Model
     {
         public int nCodigo { get; set; }
         public string sMensaje { get; set; }
-        public List<Alumno> alumno { get; set; }
+        public List<AlumnoRespose> alumnoRespose { get; set; }
     }
 }
