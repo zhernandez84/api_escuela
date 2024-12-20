@@ -17,6 +17,7 @@ namespace NetCoreAPIMySQL.Data.Repositories
         Task<RegisterCalificacionResponse> InsertCalificacion(Calificacion calificacion);
         Task<SearchCalificacionResponse> BuscarCalificacion(SearchCalificacionRequest searchCalificacionRequest);
         Task<UserLoginResponse> UserLogin(UserLoginRequest request);
-
+        Task<SearchMateriaResponse> GetMateria();
+        Task<SearchGradoResponse> GetGrado();
     }
 }

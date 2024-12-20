@@ -471,6 +471,117 @@ namespace NetCoreAPIMySQL.Data.Repositories
             return response;
         }
 
+        public async Task<SearchMateriaResponse> GetMateria()
+        {
+            SearchMateriaResponse response = new SearchMateriaResponse();
+
+            var db = dbConection();
+            try
+            {
+
+                if (db.State != System.Data.ConnectionState.Open)
+                {
+                    await db.OpenAsync();
+                }
+
+                using (MySqlCommand sqlCommand = new MySqlCommand("CALL sp_get_materias()", db))
+                {
+                    sqlCommand.CommandType = System.Data.CommandType.Text;
+                    sqlCommand.CommandTimeout = 180;
+
+                    using (MySqlDataReader dataReader = (MySqlDataReader)await sqlCommand.ExecuteReaderAsync())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            response.materia = new List<Materia>();
+                            while (await dataReader.ReadAsync())
+                            {
+                                Materia getData = new Materia();
+                                getData.nIdMateria = dataReader["nIdMateria"] != DBNull.Value ? Convert.ToInt32(dataReader["nIdMateria"]) : 0;
+                                getData.sMateria = dataReader["sMateria"] != DBNull.Value ? Convert.ToString(dataReader["sMateria"]) : null;   
+                                
+                                response.materia.Add(getData);
+                            }
+                            response.sMensaje = "Datos encontrados";
+                            response.nCodigo = 1;
+                        }
+                        else
+                        {
+                            response.sMensaje = "Datos no encontrados";
+                            response.nCodigo = 0;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.nCodigo = 0;
+                response.sMensaje = ex.Message;
+            }
+            finally
+            {
+                await db.CloseAsync();
+                await db.DisposeAsync();
+            }
+
+            return response;
+        }
+
+        public async Task<SearchGradoResponse> GetGrado()
+        {
+            SearchGradoResponse response = new SearchGradoResponse();
+
+            var db = dbConection();
+            try
+            {
+
+                if (db.State != System.Data.ConnectionState.Open)
+                {
+                    await db.OpenAsync();
+                }
+
+                using (MySqlCommand sqlCommand = new MySqlCommand("CALL sp_get_grados()", db))
+                {
+                    sqlCommand.CommandType = System.Data.CommandType.Text;
+                    sqlCommand.CommandTimeout = 180;
+
+                    using (MySqlDataReader dataReader = (MySqlDataReader)await sqlCommand.ExecuteReaderAsync())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            response.grado = new List<Grado>();
+                            while (await dataReader.ReadAsync())
+                            {
+                                Grado getData = new Grado();
+                                getData.nIdGrado = dataReader["nIdGrado"] != DBNull.Value ? Convert.ToInt32(dataReader["nIdGrado"]) : 0;
+                                getData.sGrado = dataReader["sGrado"] != DBNull.Value ? Convert.ToString(dataReader["sGrado"]) : null;
+
+                                response.grado.Add(getData);
+                            }
+                            response.sMensaje = "Datos encontrados";
+                            response.nCodigo = 1;
+                        }
+                        else
+                        {
+                            response.sMensaje = "Datos no encontrados";
+                            response.nCodigo = 0;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.nCodigo = 0;
+                response.sMensaje = ex.Message;
+            }
+            finally
+            {
+                await db.CloseAsync();
+                await db.DisposeAsync();
+            }
+
+            return response;
+        }
 
     }
 }
